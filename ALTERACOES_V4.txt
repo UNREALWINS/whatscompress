@@ -1,0 +1,23 @@
+WhatsCompress V4.0 - resumo
+===========================
+- Interface horizontal com duas colunas e botoes principais sempre visiveis.
+- Painel esquerdo: adicionar por clique/arrastar, fila e limite 30/64/100/150MB.
+- Painel direito: velocidade, progresso por video e geral, cancelar, mostrar arquivo.
+- Modo rapido: GPU testada na pratica ou CPU preset superfast, codificacao em 1 passo.
+- Queda automatica para 2 passagens quando o limite e excedido.
+- Modo preciso: 2 passagens libx264.
+- Reduz FPS >30 para 30 em modo rapido (melhora tempo de codificacao).
+- Nome: Nome (WHATSAPP).mp4, sempre na pasta original, sem apagar originais.
+- Abre Explorer com o ultimo arquivo gerado selecionado ao final da fila.
+- Script FFmpeg confere arquivos e versao antes de baixar.
+- Corrigido launcher Python fixo/inexistente; nao usa py.exe.
+- Script de compilacao gera pasta Windows portatil com EXE e FFmpeg e um ZIP final.
+
+Validacao executada neste ambiente:
+- 7 testes automatizados passaram com FFmpeg local (transcodificacao real)
+- Fonte Python verificado sintaticamente
+
+Ainda dependente do Windows do usuario:
+- Interface PySide6 nao visualmente testada no Windows
+- Executavel .exe final precisa de PyInstaller Windows (script incluso)
+- Aceleracao GPU depende dos drivers/FFmpeg do computador
