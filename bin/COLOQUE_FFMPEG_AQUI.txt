@@ -1,0 +1,2 @@
+Coloque ffmpeg.exe e ffprobe.exe aqui.
+Ou execute BAIXAR_FFMPEG.bat na pasta principal: ele verifica se ja existem antes de baixar.
