@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+
+# PyInstaller
+build/
+dist/
+*.spec
+
+# FFmpeg local: não armazenar executáveis de terceiros
+bin/*.exe
+bin/*.dll
+bin/*.zip
+
+# Builds, testes e conversões
+*.part.mp4
+.wc-*.part.mp4
+WhatsCompress*_PORTABLE_WINDOWS.zip
+*.log
+*.log.mbtree
+
+# Ferramentas / Windows
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini
+.DS_Store
