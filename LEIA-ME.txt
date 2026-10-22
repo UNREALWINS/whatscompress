@@ -1,0 +1,42 @@
+WhatsCompress 4.0 - Windows 10/11 (64 bits)
+========================================
+
+NOVO NA V4.0
+- Layout horizontal compacto: duas colunas e areas rolaveis quando necessario.
+- Arraste o video para a area da esquerda OU clique para selecionar.
+- Limite por arquivo: 30, 64, 100 ou 150 MB. MB = 1.000.000 bytes.
+- Modo RAPIDO (padrao): uma passagem; experimenta GPU NVIDIA/Intel/AMD com um
+  teste real e, se indisponivel, usa CPU com preset superfast.
+  Fontes com mais de 30 quadros/segundo passam a 30 fps para acelerar.
+- Se o arquivo ultrapassar o limite, reajusta automaticamente com duas passagens.
+- Modo PRECISO: duas passagens x264 desde o inicio para melhor previsibilidade.
+- Barra de progresso para video atual e fila completa; permite cancelar.
+- Salva NA PASTA ORIGINAL: Exemplo "Video 03 (WHATSAPP).mp4".
+- Mantem o original intacto. Nomes repetidos recebem (2), (3), etc.
+- Abre o Explorador do Windows com o ultimo arquivo convertido selecionado.
+- MP4 H.264 + AAC. Videos compativeis ja abaixo do limite sao copiados sem perdas.
+
+COMO TESTAR NO SEU COMPUTADOR
+1. Extraia o ZIP em uma pasta comum.
+2. Se a pasta bin JA TEM ffmpeg.exe E ffprobe.exe funcionando, NAO baixe novamente.
+   Caso contrario, execute BAIXAR_FFMPEG.bat. Ele faz essa checagem sozinho.
+3. Execute INICIAR_TESTE.bat. Python/PySide6 sao necessarios SOMENTE para testes
+   do projeto e para gerar o executavel.
+4. Arraste ou selecione os videos, selecione o tamanho e clique COMPRIMIR.
+
+COMO GERAR O APLICATIVO PORTATIL PARA OUTRO COMPUTADOR
+1. Depois de preparar o FFmpeg, execute INSTALAR_E_GERAR_EXE.bat.
+2. O script instala PySide6/PyInstaller neste PC, compila o .exe e copia FFmpeg.
+3. Envie WhatsCompress_V4_PORTABLE_WINDOWS.zip para o outro computador.
+4. La basta extrair e executar WhatsCompress\WhatsCompress.exe (sem Python).
+   Nao mova somente o .exe: ele precisa das pastas _internal e bin.
+
+OBSERVACOES
+- A taxa de compactacao depende da maquina, resolucao e duracao.
+- Se nenhum encoder de GPU funcionar, o app utiliza CPU automaticamente.
+- O arquivo fica ABAIXO do tamanho selecionado, nao necessariamente identico.
+- A conversao prioriza tamanho e velocidade e pode reduzir a resolucao.
+- MP4 ja compativel e abaixo do limite e copiado sem modificar a imagem.
+- FFmpeg: https://ffmpeg.org/ ; builds Windows: https://www.gyan.dev/ffmpeg/builds/
+- O FFmpeg e distribuido de acordo com as licencas de seus componentes;
+  verifique a licenca do build antes de redistribuir o pacote publicamente.
