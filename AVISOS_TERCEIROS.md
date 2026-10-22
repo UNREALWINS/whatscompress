@@ -1,25 +1,30 @@
-# Avisos de componentes de terceiros
+# Avisos e licenças de componentes de terceiros
 
-Este repositório armazena **somente o código do WhatsCompress**, sem os executáveis FFmpeg ou as bibliotecas do PySide6.
+Este projeto usa programas e bibliotecas de terceiros, que **não são de autoria do WhatsCompress**. O código-fonte próprio encontra-se neste repositório e, por enquanto, **não possui licença aberta expressa**.
 
-## FFmpeg e FFprobe
+## FFmpeg e FFprobe — GPLv3
 
-- Site oficial: https://ffmpeg.org/
-- Informações de licenciamento: https://ffmpeg.org/legal.html
-- Fonte das compilações Windows utilizadas pelo script: https://www.gyan.dev/ffmpeg/builds/
+- Projeto e código-fonte: https://ffmpeg.org/ e https://github.com/FFmpeg/FFmpeg
+- Origem da compilação Windows: https://www.gyan.dev/ffmpeg/builds/
+- Compilação utilizada: `ffmpeg-release-essentials.zip`, da Gyan.
+- Segundo o fornecedor, suas compilações estáticas são distribuídas sob **GPLv3**: https://www.gyan.dev/ffmpeg/builds/
+- Texto da licença: https://www.gnu.org/licenses/gpl-3.0.html
+- Informações oficiais sobre as obrigações de redistribuição: https://ffmpeg.org/legal.html
 
-As obrigações de licença dependem de como cada build do FFmpeg foi compilado (LGPL/GPL e eventuais bibliotecas adicionais). **Antes de publicar um release com os binários**, confirme a licença do build concreto e distribua os avisos, termos e referências ao código-fonte correspondentes. O GitHub Actions produz um artefato de teste, não o publica automaticamente como release.
+O ZIP portátil inclui `bin/ffmpeg.exe` e `bin/ffprobe.exe`, usados como executáveis externos. O pacote distribuído deve acompanhar o texto da GPLv3, a indicação de origem e a identificação exata da versão e configuração de compilação (`licencas/ffmpeg-versao-e-configuracao.txt`). O código-fonte correspondente pode ser obtido no projeto FFmpeg e na referência do fornecedor indicada acima. O responsável pela distribuição deve verificar a correspondência da versão e a disponibilidade da fonte por todo o período aplicável.
 
 ## PySide6 / Qt for Python
 
-- https://doc.qt.io/qtforpython-6/licenses.html
-
-PySide6 possui opções de licenciamento LGPL/GPL/comercial. Avalie as obrigações de redistribuição aplicáveis ao empacotamento escolhido.
+- Projeto, licenças e fontes: https://doc.qt.io/qtforpython-6/licenses.html
+- Qt: https://www.qt.io/licensing/open-source-lgpl-obligations
+- PySide6 contém bibliotecas sujeitas a condições LGPL/GPL/comerciais, conforme os componentes e a distribuição.
+- Os módulos e bibliotecas dinâmicas ficam no pacote portátil, no diretório `_internal`. Devem ser preservados ao copiar o aplicativo.
 
 ## PyInstaller
 
-- https://pyinstaller.org/en/stable/license.html
+- Projeto e licença: https://pyinstaller.org/en/stable/license.html
 
-## Marcas
+## Avisos gerais
 
-WhatsApp é marca de seus respectivos proprietários. O WhatsCompress é um projeto independente.
+- WhatsApp é marca de seus respectivos titulares. Este projeto não é afiliado ao WhatsApp ou à Meta.
+- Referências a licenças não representam aconselhamento jurídico ou garantia automática de cumprimento de todas as obrigações. Antes de qualquer redistribuição pública, o distribuidor deve conferir as licenças e a oferta correspondente de código-fonte.
