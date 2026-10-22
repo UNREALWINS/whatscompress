@@ -1,0 +1,74 @@
+name: Gerar aplicativo portátil para Windows
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+jobs:
+  windows-portable:
+    name: Testar e compilar o portátil
+    runs-on: windows-latest
+    timeout-minutes: 35
+
+    steps:
+      - name: Obter código do projeto
+        uses: actions/checkout@v4
+
+      - name: Preparar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          architecture: x64
+          cache: pip
+
+      - name: Instalar dependências Python
+        shell: pwsh
+        run: python -m pip install -r requirements.txt
+
+      - name: Verificar ou baixar FFmpeg
+        shell: pwsh
+        run: .\scripts_baixar_ffmpeg.ps1
+
+      - name: Testes automatizados
+        shell: pwsh
+        run: python -m unittest discover -s testes -v
+
+      - name: Compilar WhatsCompress.exe
+        shell: pwsh
+        run: >-
+          python -m PyInstaller --noconfirm --clean --onedir --windowed
+          --name WhatsCompress --contents-directory _internal whatscompress.py
+
+      - name: Montar e verificar ZIP portátil
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          New-Item -Path 'dist\WhatsCompress\bin' -ItemType Directory -Force | Out-Null
+          Copy-Item 'bin\ffmpeg.exe' 'dist\WhatsCompress\bin\ffmpeg.exe' -Force
+          Copy-Item 'bin\ffprobe.exe' 'dist\WhatsCompress\bin\ffprobe.exe' -Force
+          Copy-Item 'LEIA-ME.txt' 'dist\WhatsCompress\LEIA-ME.txt' -Force
+          Copy-Item 'AVISOS_TERCEIROS.md' 'dist\WhatsCompress\AVISOS_TERCEIROS.md' -Force
+          $required = @(
+            'dist\WhatsCompress\WhatsCompress.exe',
+            'dist\WhatsCompress\bin\ffmpeg.exe',
+            'dist\WhatsCompress\bin\ffprobe.exe'
+          )
+          foreach ($path in $required) {
+            if (-not (Test-Path $path)) { throw "Arquivo ausente: $path" }
+          }
+          Compress-Archive -Path 'dist\WhatsCompress' -DestinationPath 'WhatsCompress_V4_PORTABLE_WINDOWS.zip' -CompressionLevel Optimal -Force
+
+      - name: Disponibilizar pacote do Windows
+        uses: actions/upload-artifact@v4
+        with:
+          name: WhatsCompress-V4-Windows-Portable
+          path: WhatsCompress_V4_PORTABLE_WINDOWS.zip
+          if-no-files-found: error
+          retention-days: 30
