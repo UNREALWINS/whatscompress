@@ -4,7 +4,7 @@
 
 O WhatsCompress foi pensado para ser simples: **arraste ou selecione o vídeo**, escolha um tamanho máximo e clique em **COMPRIMIR**. O resultado fica junto ao arquivo original, com o sufixo **`(WHATSAPP)`**.
 
-> **Status:** projeto V4.0 com testes automatizados de conversão aprovados. A interface e o executável gerado ainda precisam de validação manual em Windows. O código-fonte **não** é um instalador nem um `.exe` pronto.
+> **Download oficial:** [WhatsCompress v4.0 — Windows portátil](https://github.com/UNREALWINS/whatscompress/releases/tag/v4.0). O aplicativo é fornecido como ZIP com o executável e suas dependências. A compilação automatizada e os testes passaram; recomenda-se validar o uso no seu Windows.
 
 ## Recursos
 
@@ -21,6 +21,15 @@ O WhatsCompress foi pensado para ser simples: **arraste ou selecione o vídeo**,
 - Verifica se **`bin/ffmpeg.exe`** e **`bin/ffprobe.exe`** já funcionam antes de baixá-los.
 
 **Importante:** o limite selecionado é um *máximo*, não um tamanho exato. A velocidade e a qualidade dependem da duração, resolução e hardware; codificação precisa pode demorar mais.
+
+## Baixar o aplicativo pronto (recomendado)
+
+1. Abra [Releases — WhatsCompress v4.0](https://github.com/UNREALWINS/whatscompress/releases/tag/v4.0).
+2. Em **Assets / Arquivos**, baixe `WhatsCompress_V4_PORTABLE_WINDOWS.zip`.
+3. Extraia toda a pasta `WhatsCompress` e abra `WhatsCompress.exe`.
+4. Não é preciso instalar Python, PySide6 ou FFmpeg. Mantenha as pastas `_internal` e `bin` junto do executável.
+
+> O ZIP disponível em **Code → Download ZIP** contém **apenas o código-fonte**; para usar o aplicativo sem instalar dependências, baixe a versão em **Releases**.
 
 ## Para usar o projeto no Windows
 
@@ -44,7 +53,7 @@ Com o FFmpeg pronto, execute **`INSTALAR_E_GERAR_EXE.bat`** no computador de des
 3. Quando terminar, abra a execução e baixe o artefato **`WhatsCompress-V4-Windows-Portable`**.
 4. Extraia o ZIP do artefato. Nele estará o arquivo **`WhatsCompress_V4_PORTABLE_WINDOWS.zip`** com o aplicativo.
 
-A automação baixa o FFmpeg durante a compilação; **não** armazena binários grandes no repositório. O pacote gerado pelo GitHub ainda precisará ser testado em um PC Windows antes de ser distribuído como versão estável.
+A automação baixa o FFmpeg durante a compilação; **não** armazena binários grandes no repositório. As versões oficiais podem ser obtidas em [Releases](https://github.com/UNREALWINS/whatscompress/releases). A automação também conserva o artefato temporário de compilação. Recomenda-se testar o executável em um PC Windows antes de usá-lo com arquivos importantes.
 
 ## Desenvolvimento e testes
 
