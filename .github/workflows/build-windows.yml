@@ -9,7 +9,7 @@ on:
       - "v*"
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   windows-portable:
@@ -55,6 +55,11 @@ jobs:
           Copy-Item 'bin\ffprobe.exe' 'dist\WhatsCompress\bin\ffprobe.exe' -Force
           Copy-Item 'LEIA-ME.txt' 'dist\WhatsCompress\LEIA-ME.txt' -Force
           Copy-Item 'AVISOS_TERCEIROS.md' 'dist\WhatsCompress\AVISOS_TERCEIROS.md' -Force
+          Copy-Item 'NOTAS_DA_VERSAO_V4_0.md' 'dist\WhatsCompress\NOTAS_DA_VERSAO_V4_0.md' -Force
+          New-Item -Path 'dist\WhatsCompress\licencas' -ItemType Directory -Force | Out-Null
+          & (Resolve-Path 'bin\ffmpeg.exe').Path -version | Out-File 'dist\WhatsCompress\licencas\ffmpeg-versao-e-configuracao.txt' -Encoding utf8
+          Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/FFmpeg/FFmpeg/master/COPYING.GPLv3' -OutFile 'dist\WhatsCompress\licencas\FFmpeg-GPLv3.txt' -UseBasicParsing
+          if (-not (Test-Path 'dist\WhatsCompress\licencas\FFmpeg-GPLv3.txt')) { throw 'Licenca GPLv3 do FFmpeg ausente.' }
           $required = @(
             'dist\WhatsCompress\WhatsCompress.exe',
             'dist\WhatsCompress\bin\ffmpeg.exe',
@@ -72,3 +77,31 @@ jobs:
           path: WhatsCompress_V4_PORTABLE_WINDOWS.zip
           if-no-files-found: error
           retention-days: 30
+
+      - name: Gerar resumo SHA-256 para verificar o pacote
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $arquivo = 'WhatsCompress_V4_PORTABLE_WINDOWS.zip'
+          $hash = (Get-FileHash -Algorithm SHA256 -Path $arquivo).Hash.ToLowerInvariant()
+          "$hash  $arquivo" | Set-Content -Path 'SHA256SUMS.txt' -Encoding ascii
+          Get-Content 'SHA256SUMS.txt'
+
+      - name: Publicar versão oficial v4.0 no GitHub Releases
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $versao = 'v4.0'
+          $existentes = gh release list --repo $env:GITHUB_REPOSITORY --json tagName --limit 100 | ConvertFrom-Json
+          if ($LASTEXITCODE -ne 0) { throw 'Nao foi possivel consultar as versoes publicadas.' }
+          if (@($existentes | Where-Object { $_.tagName -eq $versao }).Count -gt 0) {
+            Write-Host 'A versao v4.0 ja existe. Nenhuma publicacao duplicada sera feita.'
+            exit 0
+          }
+          gh release create $versao 'WhatsCompress_V4_PORTABLE_WINDOWS.zip' 'SHA256SUMS.txt' --repo $env:GITHUB_REPOSITORY --target $env:GITHUB_SHA --title 'WhatsCompress v4.0 - Primeira versao oficial' --notes-file 'NOTAS_DA_VERSAO_V4_0.md' --latest
+          if ($LASTEXITCODE -ne 0) { throw 'Falha ao criar o GitHub Release v4.0.' }
+          Write-Host 'Publicacao oficial concluida:'
+          Write-Host ('https://github.com/' + $env:GITHUB_REPOSITORY + '/releases/tag/' + $versao)
